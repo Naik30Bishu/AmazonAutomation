@@ -17,7 +17,7 @@ namespace TraningProject1
         }
 
         [Test]
-        public void Test1()
+        public void Test()
         {
             LoginPage loginpage = new LoginPage(driver);
             loginpage.Signin("email", "Password1");
