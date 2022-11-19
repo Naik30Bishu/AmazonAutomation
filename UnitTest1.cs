@@ -20,10 +20,10 @@ namespace TraningProject1
         public void Test1()
         {
             LoginPage loginpage = new LoginPage(driver);
-            loginpage.Signin();
+            loginpage.Signin("email", "Password1");
 
             HomePage homepage = new HomePage(driver);
-            homepage.SearchProduct();
+            homepage.SearchProduct("Mobile");
 
             ProductDetails productpage = new ProductDetails(driver);
             productpage.ProductSelection();

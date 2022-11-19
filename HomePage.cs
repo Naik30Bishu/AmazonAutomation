@@ -14,14 +14,14 @@ namespace TraningProject1
             PageFactory.InitElements(driver, this);
 
         }
-
+        
         [FindsBy(How = How.Id, Using = "twotabsearchtextbox")]
         [CacheLookup]
         private IWebElement SearchButton;
 
-        public void SearchProduct()
+        public void SearchProduct(string searchText)
         {
-            SearchButton.SendKeys("Mobile");
+            SearchButton.SendKeys(searchText);
             SearchButton.Submit();
         }
     }

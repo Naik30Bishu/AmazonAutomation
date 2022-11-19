@@ -38,13 +38,13 @@ namespace TraningProject1
         [CacheLookup]
         private IWebElement SigninButton;
 
-        public void Signin()
+        public void Signin(String email,String password)
         {
             
             MouseHover.Click();
-            EmailTextfield.SendKeys("6239593362");
+            EmailTextfield.SendKeys(email);
             ContinueButton.Click();
-            Password.SendKeys("Password1");
+            Password.SendKeys(password);
             SigninButton.Click();
 
         }
