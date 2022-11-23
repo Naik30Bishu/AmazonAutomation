@@ -22,18 +22,31 @@ namespace TraningProject1
         private IWebElement AddToCart;
 
         //*[@id='sc-buy-box-ptc-button']/span/input
-        [FindsBy(How = How.XPath, Using = "(//*[@id=\"sc-buy-box-ptc-button\"]])")] 
+        [FindsBy(How = How.XPath, Using = "(//*[@value='Proceed to checkout'])")] 
         [CacheLookup]
         private IWebElement ProceedToPay;
 
         private void SearchProducts(String productName)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
             //Thread.Sleep(1000);
-            IWebElement SearchResult = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text()='" + productName + "']")));
-            SearchResult.Click();
+            //IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//*[text()='" + productName + "']")));
+            while (true)
+            {
+                try
+                {
+                    IWebElement SearchResult = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text()='" + productName + "']")));
+                    SearchResult.Click();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    driver.Navigate().Refresh();
+                    continue;
+                }
+            }
             //driver.FindElement(By.XPath("//*[text()='" + productName + "']")).Click();
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             driver.SwitchTo().Window(driver.WindowHandles[1]);
             
         }
