@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
+using System;
+using System.Threading;
 
 namespace TraningProject1
 {
@@ -19,10 +21,24 @@ namespace TraningProject1
         [CacheLookup]
         private IWebElement SearchButton;
 
+        public void GoToHome()
+        {
+            driver.Close();
+            driver.SwitchTo().Window(driver.WindowHandles[0]);
+            driver.Navigate().GoToUrl("https://www.amazon.in/");
+            Thread.Sleep(1000);
+        }
+
         public void SearchProduct(string searchText)
         {
             SearchButton.SendKeys(searchText);
             SearchButton.Submit();
+        }
+
+        public void SearchProductByID(string searchText)
+        {
+            driver.FindElement(By.Id("twotabsearchtextbox")).SendKeys(searchText);
+            driver.FindElement(By.Id("twotabsearchtextbox")).Submit();
         }
     }
 }

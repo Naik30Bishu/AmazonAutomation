@@ -17,29 +17,61 @@ namespace TraningProject1
             PageFactory.InitElements(driver, this);
         }
 
-        [FindsBy(How = How.XPath, Using = "(//span[starts-with(@class,'a-size-medium a-color-base a-text-normal')])[1]")]
-        [CacheLookup]
-        private IWebElement Product1;
-
         [FindsBy(How = How.XPath, Using = "(//input[starts-with(@id,'add-to-cart-button')])")]
         [CacheLookup]
         private IWebElement AddToCart;
 
-        [FindsBy(How = How.XPath, Using = "(//*[@id='sc-buy-box-ptc-button']/span/input)")] 
+        //*[@id='sc-buy-box-ptc-button']/span/input
+        [FindsBy(How = How.XPath, Using = "(//*[@id=\"sc-buy-box-ptc-button\"]])")] 
         [CacheLookup]
         private IWebElement ProceedToPay;
 
-
-        public void ProductSelection()
+        private void SearchProducts(String productName)
         {
-            Product1.Click();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            //Thread.Sleep(1000);
+            IWebElement SearchResult = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text()='" + productName + "']")));
+            SearchResult.Click();
+            //driver.FindElement(By.XPath("//*[text()='" + productName + "']")).Click();
             Thread.Sleep(1000);
             driver.SwitchTo().Window(driver.WindowHandles[1]);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            
+        }
+
+        public void ProductSelection(String productName)
+        {
+            SearchProducts(productName);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("(//input[starts-with(@id,'add-to-cart-button')])")));
             IWebElement SearchResult = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(AddToCart));
             AddToCart.Submit();
             
+        }
+
+        public String getPriceFromSearchPage(String productName)
+        {
+            IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//span[contains(text() ,'"+productName+"') ]/ancestor::div[contains(@class, 'a-section a-spacing-small a-spacing-top-small')]//span[contains(@class, 'a-price-whole')]"));
+            String priceElement = DisplayPriceElement.Text;
+            return priceElement;
+        }
+
+        public String getPriceFromProductPage(String productName)
+        {
+            SearchProducts(productName);
+            Thread.Sleep(1000);
+            IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//*[@id='corePriceDisplay_desktop_feature_div']//span[contains(@class, 'a-price-whole')]"));
+            String priceElement = DisplayPriceElement.Text;
+            return priceElement;
+        }
+
+        public String getPriceFromCheckoutPage(String productName)
+        {
+            ProductSelection(productName);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//*[@id='attach-accessory-cart-subtotal']")));
+            //IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//*[@id='attach-accessory-cart-subtotal']"));
+            String priceElement = Search.Text;
+            return priceElement;
         }
 
         public void ProceedToPayment()
