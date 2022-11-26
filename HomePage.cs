@@ -14,7 +14,6 @@ namespace TraningProject1
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
-
         }
         
         [FindsBy(How = How.Id, Using = "twotabsearchtextbox")]

@@ -26,7 +26,6 @@ namespace TraningProject1
             driver.Navigate().GoToUrl("https://www.amazon.in/gp/cart/view.html?ref_=nav_cart");
             String TotalSum = subTotal.Text;
             return TotalSum;
-
         }
 
     }

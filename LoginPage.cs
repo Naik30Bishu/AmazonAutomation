@@ -15,7 +15,6 @@ namespace TraningProject1
             String test_url = "https://www.amazon.in/";
             driver.Url = test_url;
             PageFactory.InitElements(driver, this);
-
         }
 
         [FindsBy(How = How.Id, Using = "nav-link-accountList-nav-line-1")]

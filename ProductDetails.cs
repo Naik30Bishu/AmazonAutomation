@@ -29,9 +29,9 @@ namespace TraningProject1
         private void SearchProducts(String productName)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
-            //Thread.Sleep(1000);
-            //IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//*[text()='" + productName + "']")));
-            while (true)
+            int trail = 0;
+
+            while (trail < 5)
             {
                 try
                 {
@@ -42,13 +42,11 @@ namespace TraningProject1
                 catch (Exception ex)
                 {
                     driver.Navigate().Refresh();
+                    trail++;
                     continue;
                 }
             }
-            //driver.FindElement(By.XPath("//*[text()='" + productName + "']")).Click();
-            //Thread.Sleep(1000);
             driver.SwitchTo().Window(driver.WindowHandles[1]);
-            
         }
 
         public void ProductSelection(String productName)
@@ -82,7 +80,6 @@ namespace TraningProject1
             ProductSelection(productName);
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("//*[@id='attach-accessory-cart-subtotal']")));
-            //IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//*[@id='attach-accessory-cart-subtotal']"));
             String priceElement = Search.Text;
             return priceElement;
         }

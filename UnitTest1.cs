@@ -23,12 +23,10 @@ namespace TraningProject1
         [Test]
         public void AddFirstProductToCart()
         {
-
             HomePage homepage = new HomePage(driver);
-            homepage.SearchProduct("Apple iPhone 13 (128GB) - Green");
-
+            homepage.SearchProduct("Apple iPhone 13 Pro (256GB) - Gold");
             ProductDetails productpage = new ProductDetails(driver);
-            productpage.ProductSelection("Apple iPhone 13 (128GB) - Green");
+            productpage.ProductSelection("Apple iPhone 13 Pro (256GB) - Gold");
             productpage.ProceedToPayment();
         }
 
@@ -36,39 +34,35 @@ namespace TraningProject1
         public void CheckProductPriceOnSearchPage()
         {
             HomePage homepage = new HomePage(driver);
-            homepage.SearchProduct("Apple iPhone 13 (128GB) - Green");
-
+            homepage.SearchProduct("Apple iPhone 13 Pro (256GB) - Gold");
             ProductDetails productpage = new ProductDetails(driver);
-            String DisplayProductPrice = productpage.getPriceFromSearchPage("Apple iPhone 13 (128GB) - Green");
-            Assert.AreEqual("65,999", DisplayProductPrice, "Price does not Match");
+            String DisplayProductPrice = productpage.getPriceFromSearchPage("Apple iPhone 13 Pro (256GB) - Gold");
+            Assert.AreEqual("1,17,900", DisplayProductPrice, "Price does not Match");
         }
 
-        [TestCase("Apple iPhone 13 (128GB) - Green", "65,999")]
+        [TestCase("Apple iPhone 13 Pro (256GB) - Gold", "1,17,900")]
         [TestCase("Apple iPhone 12 (64GB) - (Product) RED", "48,999")]
         
         public void CheckProductPriceOnProductPage(String productName , String ExpectedPrice)
         {
             HomePage homepage = new HomePage(driver);
             homepage.SearchProduct(productName);
-
             ProductDetails productpage = new ProductDetails(driver);
             String ActualPrice = productpage.getPriceFromProductPage(productName);
             Assert.AreEqual(ExpectedPrice, ActualPrice, "Price does not Match");
         }
 
-        //[TestCase("Apple iPhone 13 (128GB) - Green", "65,999")]
-        [TestCase(new String[] { "Apple iPhone 13 (128GB) - Green" , "Ikigai: The Japanese secret to a long and happy life" }, new int[] { 65999, 369 })]
+        
+        [TestCase(new String[] { "Apple iPhone 13 Pro (256GB) - Gold", "Ikigai: The Japanese secret to a long and happy life" }, new int[] { 117900, 369 })]
         [Test]
         public void CheckFinalCartPrice(String[] productName, int[] ExpectedPrice)
         {
             
             int Expectedsum = 0;
-            int Actualsum = 0;
             for (int i = 0; i < productName.Length; i++)
             {
                 HomePage homepage = new HomePage(driver);
                 homepage.SearchProduct(productName[i]);
-
                 ProductDetails productpage = new ProductDetails(driver);
                 productpage.ProductSelection(productName[i]);
                 Expectedsum = Expectedsum + ExpectedPrice[i];
@@ -77,8 +71,12 @@ namespace TraningProject1
             }
             Cart cartpage = new Cart(driver);
             string output = cartpage.GetCartPrice();
-            int num = int.Parse(output, NumberStyles.AllowThousands);
-            Assert.AreEqual(Expectedsum, num, output);
+            string newActualamount = output.Replace(",", "");
+            newActualamount = newActualamount.Replace(" ", "");
+            int index = newActualamount.IndexOf('.');
+            newActualamount = newActualamount.Substring(0, index);
+            int newIntActualAmount = int.Parse(newActualamount);
+            Assert.AreEqual(Expectedsum, newIntActualAmount, output);
         }
 
         [TearDown]
