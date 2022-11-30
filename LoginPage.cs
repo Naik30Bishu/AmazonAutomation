@@ -16,30 +16,30 @@ namespace TraningProject1
             driver.Url = test_url;
             PageFactory.InitElements(driver, this);
         }
-
-        [FindsBy(How = How.Id, Using = "nav-link-accountList-nav-line-1")]
+       
+        [FindsBy(How = How.XPath, Using = "//span[contains(text(),'Hello, sign in')]")]
         [CacheLookup]
         private IWebElement MouseHover;
 
-        [FindsBy(How = How.Id, Using = "ap_email")]
+        [FindsBy(How = How.XPath, Using = "//*[@id='ap_email' and @type='email']")]
         [CacheLookup]
         private IWebElement EmailTextfield;
 
-        [FindsBy(How = How.Id, Using = "continue")]
+        [FindsBy(How = How.XPath, Using = "//input[@id='continue' and @class='a-button-input']")]
         [CacheLookup]
         private IWebElement ContinueButton;
 
-        [FindsBy(How = How.Id, Using = "ap_password")]
+        [FindsBy(How = How.XPath, Using = "//input[@id='ap_password' and @class='a-input-text a-span12 auth-autofocus auth-required-field']")]
         [CacheLookup]
         private IWebElement Password;
 
-        [FindsBy(How = How.Id, Using = "signInSubmit")]
+        [FindsBy(How = How.XPath, Using = "//input[@id='signInSubmit' and @class='a-button-input']")]
         [CacheLookup]
         private IWebElement SigninButton;
 
-        public void Signin(String email,String password)
+        public void Signin(String email, String password)
         {
-            
+
             MouseHover.Click();
             EmailTextfield.SendKeys(email);
             ContinueButton.Click();

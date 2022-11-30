@@ -21,8 +21,8 @@ namespace TraningProject1
         [CacheLookup]
         private IWebElement AddToCart;
 
-        //*[@id='sc-buy-box-ptc-button']/span/input
-        [FindsBy(How = How.XPath, Using = "(//*[@value='Proceed to checkout'])")] 
+        
+        [FindsBy(How = How.XPath, Using = "(//*[@value='Proceed to checkout'])")]
         [CacheLookup]
         private IWebElement ProceedToPay;
 
@@ -56,12 +56,12 @@ namespace TraningProject1
             IWebElement Search = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath("(//input[starts-with(@id,'add-to-cart-button')])")));
             IWebElement SearchResult = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(AddToCart));
             AddToCart.Submit();
-            
+
         }
 
         public String getPriceFromSearchPage(String productName)
         {
-            IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//span[contains(text() ,'"+productName+"') ]/ancestor::div[contains(@class, 'a-section a-spacing-small a-spacing-top-small')]//span[contains(@class, 'a-price-whole')]"));
+            IWebElement DisplayPriceElement = driver.FindElement(By.XPath("//span[contains(text() ,'" + productName + "') ]/ancestor::div[contains(@class, 'a-section a-spacing-small a-spacing-top-small')]//span[contains(@class, 'a-price-whole')]"));
             String priceElement = DisplayPriceElement.Text;
             return priceElement;
         }

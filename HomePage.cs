@@ -15,8 +15,8 @@ namespace TraningProject1
             this.driver = driver;
             PageFactory.InitElements(driver, this);
         }
-        
-        [FindsBy(How = How.Id, Using = "twotabsearchtextbox")]
+
+        [FindsBy(How = How.XPath, Using = "//*[@id='twotabsearchtextbox' and @class='nav-input nav-progressive-attribute']")]
         [CacheLookup]
         private IWebElement SearchButton;
 
@@ -32,12 +32,6 @@ namespace TraningProject1
         {
             SearchButton.SendKeys(searchText);
             SearchButton.Submit();
-        }
-
-        public void SearchProductByID(string searchText)
-        {
-            driver.FindElement(By.Id("twotabsearchtextbox")).SendKeys(searchText);
-            driver.FindElement(By.Id("twotabsearchtextbox")).Submit();
         }
     }
 }

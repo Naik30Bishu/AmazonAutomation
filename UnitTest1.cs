@@ -24,9 +24,9 @@ namespace TraningProject1
         public void AddFirstProductToCart()
         {
             HomePage homepage = new HomePage(driver);
-            homepage.SearchProduct("Apple iPhone 13 Pro (256GB) - Gold");
+            homepage.SearchProduct("Apple iPhone 14 128GB Purple");
             ProductDetails productpage = new ProductDetails(driver);
-            productpage.ProductSelection("Apple iPhone 13 Pro (256GB) - Gold");
+            productpage.ProductSelection("Apple iPhone 14 128GB Purple");
             productpage.ProceedToPayment();
         }
 
@@ -34,16 +34,16 @@ namespace TraningProject1
         public void CheckProductPriceOnSearchPage()
         {
             HomePage homepage = new HomePage(driver);
-            homepage.SearchProduct("Apple iPhone 13 Pro (256GB) - Gold");
+            homepage.SearchProduct("Apple iPhone 13 Mini (256 GB) - Green");
             ProductDetails productpage = new ProductDetails(driver);
-            String DisplayProductPrice = productpage.getPriceFromSearchPage("Apple iPhone 13 Pro (256GB) - Gold");
-            Assert.AreEqual("1,17,900", DisplayProductPrice, "Price does not Match");
+            String DisplayProductPrice = productpage.getPriceFromSearchPage("Apple iPhone 13 Mini (256 GB) - Green");
+            Assert.AreEqual("74,900", DisplayProductPrice, "Price does not Match");
         }
 
         [TestCase("Apple iPhone 13 Pro (256GB) - Gold", "1,17,900")]
-        [TestCase("Apple iPhone 12 (64GB) - (Product) RED", "48,999")]
-        
-        public void CheckProductPriceOnProductPage(String productName , String ExpectedPrice)
+        [TestCase("Apple iPhone 13 Mini (256GB) - Starlight", "74,900")]
+
+        public void CheckProductPriceOnProductPage(string productName, String ExpectedPrice)
         {
             HomePage homepage = new HomePage(driver);
             homepage.SearchProduct(productName);
@@ -52,12 +52,12 @@ namespace TraningProject1
             Assert.AreEqual(ExpectedPrice, ActualPrice, "Price does not Match");
         }
 
-        
-        [TestCase(new String[] { "Apple iPhone 13 Pro (256GB) - Gold", "Ikigai: The Japanese secret to a long and happy life" }, new int[] { 117900, 369 })]
+
+        [TestCase(new String[] { "Apple iPhone 14 256GB Midnight", "Ikigai: The Japanese secret to a long and happy life" }, new int[] { 88400, 350 })]
         [Test]
         public void CheckFinalCartPrice(String[] productName, int[] ExpectedPrice)
         {
-            
+
             int Expectedsum = 0;
             for (int i = 0; i < productName.Length; i++)
             {
